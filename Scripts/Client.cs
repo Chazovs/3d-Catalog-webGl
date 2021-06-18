@@ -1,7 +1,5 @@
-using System;
+using Newtonsoft.Json;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,10 +9,8 @@ public class Client
     {
         WWWForm form = new WWWForm();
         form.AddField("myField", "myData");
-        Debug.Log("z1");
         form.AddField("sessid", Main.bxSessId);
-        Debug.Log("z2");
-        form.AddField("SITE_ID", "s1");
+        form.AddField("SITE_ID", Main.siteId);
 
         UnityWebRequest www = UnityWebRequest.Post("/bitrix/services/main/ajax.php?action=chazov:unimarket.api.catalogcontroller.getcatalog", form);
 
@@ -26,9 +22,16 @@ public class Client
         }
         else
         {
-            Debug.Log("Success " + www.downloadHandler.text);
-            byte[] results = www.downloadHandler.data;
-            Debug.Log("Second Success");
+            CatalogResponse catalogResponse 
+                = JsonConvert.DeserializeObject<CatalogResponse>(www.downloadHandler.text);
+
+            MarketService marketService = new MarketService();
+
+            if(catalogResponse.success == true)
+            {
+                Debug.Log("success");
+                marketService.CreateMarket(catalogResponse.catalogs);
+            }
         }
     }
 }

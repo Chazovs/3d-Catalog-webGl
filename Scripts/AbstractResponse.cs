@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-internal class AbstractResponse
+public abstract class AbstractResponse
 {
     public List<string> errMsg;
     

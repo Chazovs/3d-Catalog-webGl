@@ -5,17 +5,14 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
     public static string bxSessId = "";
+    internal static string siteId = "";
 
-    public void logBxSessId()
+    public void SetSiteId(string siteId)
     {
-        Debug.Log(bxSessId);
-
-        MarketService marketService = new MarketService();
-
-        marketService.CreateMarket();
+        siteId = siteId;
     }
 
-    public void setBxSessId(string sessId)
+    public void SetBxSessId(string sessId)
     {
         bxSessId = sessId;
     }
@@ -23,11 +20,9 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Client client = new Client();
+        /*Client client = new Client();*/
+        TestClient client = new TestClient();
         StartCoroutine(client.UploadCatalog());
-/*        MarketService marketService = new MarketService();
-
-        marketService.CreateMarket();*/
     }
 
     // Update is called once per frame

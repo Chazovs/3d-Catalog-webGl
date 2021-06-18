@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-internal class Catalog
+public class Catalog
 {
-    public Dictionary<int, Category> categories;
-    public string code;
+    public Dictionary<string, Category> categories;
+    public string? code;
     public int iblockId;
-    public string imagePath;
+    public string? imagePath;
     public int itemCount;
-    public string name;
+    public string? name;
 }

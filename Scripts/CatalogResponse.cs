@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-internal class CatalogResponse: AbstractResponse
+public class CatalogResponse: AbstractResponse
 {
-    internal Dictionary<int, Catalog> catalogs;
+    public Dictionary<string, Catalog> catalogs;
 }
