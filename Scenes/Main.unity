@@ -372,6 +372,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemPrefab: {fileID: 7646470414569287250, guid: 9eb44691255ce054a8e9440ecd7f8e3c, type: 3}
+  CategoryPrefab: {fileID: 4191098543458597095, guid: 803bbb5713d26484aaaf01bca02d04c9, type: 3}
+  CatalogPrefab: {fileID: 1092169588400535228, guid: 322e3d4d73467ce448a1b46f5b883151, type: 3}
+  FloorPrefab: {fileID: 8706921889281987906, guid: 84b2cf38eef86d64f9ea965f5c555191, type: 3}
 --- !u!4 &1474098687
 Transform:
   m_ObjectHideFlags: 0

@@ -22,15 +22,15 @@ public class Client
         }
         else
         {
-            CatalogResponse catalogResponse 
-                = JsonConvert.DeserializeObject<CatalogResponse>(www.downloadHandler.text);
+            CatalogResponseWrapper catalogResponseWrapper
+               = JsonConvert.DeserializeObject<CatalogResponseWrapper>(www.downloadHandler.text);
 
             MarketService marketService = new MarketService();
 
-            if(catalogResponse.success == true)
+            if (catalogResponseWrapper.data.success == true)
             {
                 Debug.Log("success");
-                marketService.CreateMarket(catalogResponse.catalogs);
+                marketService.CreateMarket(catalogResponseWrapper.data.catalogs);
             }
         }
     }
