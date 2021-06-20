@@ -6,6 +6,13 @@ public class Main : MonoBehaviour
 {
     public static string bxSessId = "";
     internal static string siteId = "";
+    public static TestClient client;
+    public static string confirmOrderUrl = "/personal/order/make/";
+
+    public void SetConfirmOrderUrl(string confirmOrderUrl)
+    {
+        confirmOrderUrl = confirmOrderUrl;
+    }
 
     public void SetSiteId(string siteId)
     {
@@ -20,9 +27,9 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*Client client = new Client();*/
-        TestClient client = new TestClient();
-        StartCoroutine(client.UploadCatalog());
+        /*Client client = GameObject.Find("Client").GetComponent<Client>();*/
+        client = GameObject.Find("TestClient").GetComponent<TestClient>();
+        client.UploadCatalog();
     }
 
     // Update is called once per frame

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
 
@@ -23,8 +24,9 @@ public class TestCustomerController : MonoBehaviour
 	private int layerMask;
 	private Rigidbody body;
 	private float rotationY;
-
-	void Start()
+    private RaycastHit hit;
+ 
+    void Start()
 	{
 		body = GetComponent<Rigidbody>();
 		body.freezeRotation = true;
@@ -80,9 +82,43 @@ public class TestCustomerController : MonoBehaviour
 		{
 			body.velocity = new Vector2(0, jumpForce);
 		}
+
+		if (Input.GetKeyDown(KeyCode.Mouse0))
+		{
+			MouseZeroDownAction();
+		}
+
+		if (Input.GetKeyDown(KeyCode.KeypadEnter))
+		{
+			Application.OpenURL(Main.confirmOrderUrl);
+		}
 	}
 
-	void OnDrawGizmosSelected() // подсветка, для визуальной настройки jumpDistance
+    private void MouseZeroDownAction()
+    {
+        GameObject MainCamera = head.gameObject;
+
+        Ray ray = MainCamera
+            .GetComponent<Camera>()
+            .ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+        if (!Physics.Raycast(ray, out hit))
+        {
+            return;
+        }
+
+        GameObject hitObject = hit.collider.gameObject;
+        BaseContainer container = hitObject.GetComponent<BaseContainer>();
+
+        if (container == null || container.content == null)
+        {
+            return;
+        }
+
+        container.content.MouseZeroDown();
+    }
+
+    void OnDrawGizmosSelected() // подсветка, для визуальной настройки jumpDistance
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawRay(transform.position, Vector3.down * jumpDistance);

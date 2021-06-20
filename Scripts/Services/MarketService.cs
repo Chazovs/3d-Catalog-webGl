@@ -57,12 +57,14 @@ public class MarketService
 
     private void CreateMarketItem(Item item)
     {
-        _objectService.InstantiateItem(item, offsets);
+        GameObject itemObject = _objectService.InstantiateItem(item, offsets);
+        itemObject.GetComponent<BaseContainer>().content = item;
     }
 
     private void CreateCategoryObject(Category category)
     {
-        _objectService.InstantiateCategory(category, offsets);
+        GameObject categoryObject = _objectService.InstantiateCategory(category, offsets);
+        categoryObject.GetComponent<BaseContainer>().content = category;
     }
 
     private void CreateCatalogObject(Catalog catalog)
