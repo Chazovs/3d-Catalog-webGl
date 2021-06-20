@@ -7,7 +7,8 @@ public class ObjectService : MonoBehaviour
     public GameObject CategoryPrefab;
     public GameObject CatalogPrefab;
     public GameObject FloorPrefab;
-    public GameObject CustomerPrefab;
+    public GameObject Customer;
+    public GameObject MainCamera;
 
     internal GameObject InstantiateItem(Item item, Offsets offsets)
     {
@@ -35,14 +36,12 @@ public class ObjectService : MonoBehaviour
 
     internal GameObject InstantiateCustomer(int maxCategories)
     {
-        return Instantiate(
-            CustomerPrefab,
-            new Vector3(
-                (maxCategories/2)*Constants.categoryOffset,
+        Customer.transform.position = new Vector3(
+                (maxCategories / 2) * Constants.categoryOffset,
                 2,
                 -Constants.itemOffset * 2.5f
-                ),
-            Quaternion.identity
-            );
+                );
+
+        return Customer;
     }
 }
