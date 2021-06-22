@@ -44,4 +44,9 @@ public class ObjectService : MonoBehaviour
 
         return Customer;
     }
+
+    internal void UpdateBasketInfo(BasketResponse data)
+    {
+        throw new NotImplementedException();
+    }
 }

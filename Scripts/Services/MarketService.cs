@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class MarketService
 {
     private ObjectService _objectService;
+    private Client _client;
     internal Offsets offsets = new Offsets();
     private int _maxItemInCategoryCount = 0;
     private int _categoriesCount = 0;
 
     public MarketService() {
         _objectService = GameObject.Find("ObjectService").GetComponent<ObjectService>();
+        _client = GameObject.Find("Client").GetComponent<Client>();
     }
 
     public void CreateMarket(Dictionary<string, Catalog> catalogs)
@@ -58,6 +60,9 @@ public class MarketService
     private void CreateMarketItem(Item item)
     {
         GameObject itemObject = _objectService.InstantiateItem(item, offsets);
+
+        _client.GetImageSprite(item.imagePath, itemObject);
+
         itemObject.GetComponent<BaseContainer>().content = item;
     }
 

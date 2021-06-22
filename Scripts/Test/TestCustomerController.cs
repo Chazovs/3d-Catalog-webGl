@@ -43,6 +43,7 @@ public class TestCustomerController : MonoBehaviour
 		{
 			body.velocity = new Vector3(Mathf.Sign(body.velocity.x) * speed, body.velocity.y, body.velocity.z);
 		}
+
 		if (Mathf.Abs(body.velocity.z) > speed)
 		{
 			body.velocity = new Vector3(body.velocity.x, body.velocity.y, Mathf.Sign(body.velocity.z) * speed);
