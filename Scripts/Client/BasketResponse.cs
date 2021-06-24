@@ -2,6 +2,6 @@
 
 public class BasketResponse : AbstractResponse
 {
-    public Dictionary<string, BasketItems> basketItems;
-    public float totalPrice;
+    public List<BasketItem> basketItems;
+    public float? totalPrice;
 }

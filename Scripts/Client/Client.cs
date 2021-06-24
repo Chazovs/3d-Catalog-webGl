@@ -7,26 +7,28 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour
 {
-    public void UploadCatalog()
+    public new void UploadCatalog()
     {
         StartCoroutine(StartUploadCatalog());
     }
 
-    public void AddItemToBasket(int itemId)
+    public new void AddItemToBasket(int itemId)
     {
         StartCoroutine(StartAddItemToBasket(itemId));
     }
 
-    public IEnumerator StartUploadCatalog()
+    internal void GetImageSprite(string imagePath, GameObject itemObject)
+    {
+        StartCoroutine(LoadPhoto(imagePath, itemObject));
+    }
+
+    public new IEnumerator StartUploadCatalog()
     {
         WWWForm form = new WWWForm();
         form.AddField("sessid", Main.bxSessId);
         form.AddField("SITE_ID", Main.siteId);
 
-        UnityWebRequest www = UnityWebRequest.Post(
-                "/bitrix/services/main/ajax.php?action=chazov:unimarket.api.catalogcontroller.getcatalog",
-                form
-                );
+        UnityWebRequest www = UnityWebRequest.Post("/bitrix/services/main/ajax.php?action=chazov:unimarket.api.catalogcontroller.getcatalog", form);
 
         yield return www.SendWebRequest();
 
@@ -36,13 +38,16 @@ public class Client : MonoBehaviour
         }
         else
         {
+            string responseText = www.downloadHandler.text;
+
             CatalogResponseWrapper catalogResponseWrapper
-               = JsonConvert.DeserializeObject<CatalogResponseWrapper>(www.downloadHandler.text);
+                = JsonConvert.DeserializeObject<CatalogResponseWrapper>(responseText);
 
             MarketService marketService = new MarketService();
 
             if (catalogResponseWrapper.data.success == true)
             {
+                Debug.Log("success");
                 marketService.CreateMarket(catalogResponseWrapper.data.catalogs);
             }
         }
@@ -68,26 +73,33 @@ public class Client : MonoBehaviour
         }
         else
         {
+            string responseText = www.downloadHandler.text;
+
             BasketResponseWrapper basketResponseWrapper
-               = JsonConvert.DeserializeObject<BasketResponseWrapper>(www.downloadHandler.text);
+                = JsonConvert.DeserializeObject<BasketResponseWrapper>(responseText);
 
-            ObjectService objectService = GameObject.Find("ObjectService").GetComponent<ObjectService>();
+            Transform transform = GameObject.Find("LeftCanva").transform;
+            string resultMsg = "";
 
-            if (basketResponseWrapper.data.success == true)
+            if (basketResponseWrapper.data.basketItems != null)
             {
-                objectService.UpdateBasketInfo(basketResponseWrapper.data);
+                foreach (BasketItem basketItem in basketResponseWrapper.data.basketItems)
+                {
+                    //разрешенные теги: http://digitalnativestudios.com/textmeshpro/docs/rich-text/
+                    resultMsg += "- " + basketItem.name + " | " + basketItem.quantity + "\n";
+                }
             }
-        }
-    }
 
-    internal void GetImageSprite(string imagePath, GameObject itemObject)
-    {
-        StartCoroutine(LoadPhoto(imagePath, itemObject));
+            transform.Find("Title").GetComponent<Text>().text = "Корзина";
+            transform.Find("Description").GetComponent<Text>().text = resultMsg;
+            transform.Find("PriceTitle").GetComponent<Text>().text = "Итого";
+            transform.Find("Summ").GetComponent<Text>().text = basketResponseWrapper.data.totalPrice.ToString() + " руб.";
+        }
     }
 
     private IEnumerator LoadPhoto(string imagePath, GameObject itemObject)
     {
-        string url = "http://unimarket.local" + imagePath; //TODO delete test adress
+        string url = imagePath; //TODO delete test adress
         Texture2D texture;
         texture = new Texture2D(4, 4, TextureFormat.DXT1, false);
         WWW www = new WWW(url);
@@ -97,7 +109,5 @@ public class Client : MonoBehaviour
         www.LoadImageIntoTexture(texture);
 
         itemObject.transform.Find("Canvas").transform.Find("RawImage").GetComponent<RawImage>().texture = texture;
-
-        //GetComponent<Renderer>().material.mainTexture = tex;
     }
 }

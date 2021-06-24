@@ -1,4 +1,4 @@
-﻿public class BasketItems : Item
+﻿public class BasketItem : Item
 {
-    public int quantity;
+    public int? quantity;
 }

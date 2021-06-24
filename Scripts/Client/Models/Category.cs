@@ -10,6 +10,11 @@ public class Category : Interactive
     public int? parentSection;
     public string? picture;
 
+    public void MouseOneDown()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void MouseZeroDown()
     {
         throw new System.NotImplementedException();

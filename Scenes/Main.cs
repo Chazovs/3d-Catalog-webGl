@@ -5,9 +5,15 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
     public static string bxSessId = "";
-    internal static string siteId = "";
-    public static TestClient client;
+    public static string siteId = "";
+    public static string serverName = "";
+    public static Client client;
     public static string confirmOrderUrl = "/personal/order/make/";
+
+    public void SetServerName(string serverName)
+    {
+        serverName = serverName;
+    }
 
     public void SetConfirmOrderUrl(string confirmOrderUrl)
     {
@@ -28,7 +34,7 @@ public class Main : MonoBehaviour
     void Start()
     {
         /*Client client = GameObject.Find("Client").GetComponent<Client>();*/
-        client = GameObject.Find("TestClient").GetComponent<TestClient>();
+        client = GameObject.Find("Client").GetComponent<Client>();
         client.UploadCatalog();
     }
 

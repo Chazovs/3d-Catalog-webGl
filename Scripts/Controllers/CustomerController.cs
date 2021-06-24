@@ -4,7 +4,7 @@ using System;
 
 [RequireComponent(typeof(Rigidbody))]
 
-public class TestCustomerController : MonoBehaviour
+public class CustomerController : MonoBehaviour
 {
 
 	public float speed = 1.5f;
@@ -89,34 +89,60 @@ public class TestCustomerController : MonoBehaviour
 			MouseZeroDownAction();
 		}
 
+		if (Input.GetKeyDown(KeyCode.Mouse1))
+		{
+			MouseOneDownAction();
+		}
+
 		if (Input.GetKeyDown(KeyCode.KeypadEnter))
 		{
-			Application.OpenURL(Main.confirmOrderUrl);
+			Debug.Log(Main.serverName + Main.confirmOrderUrl);
+			Application.OpenURL(Main.serverName + Main.confirmOrderUrl);
 		}
+	}
+
+    private void MouseOneDownAction()
+    {
+		Interactive? content = GetBaseContainer();
+
+		if (content != null)
+		{
+			content.MouseOneDown();
+		}
+	}
+
+	private Interactive? GetBaseContainer()
+    {
+		GameObject MainCamera = head.gameObject;
+
+		Ray ray = MainCamera
+			.GetComponent<Camera>()
+			.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+		if (!Physics.Raycast(ray, out hit))
+		{
+			return null;
+		}
+
+		GameObject hitObject = hit.collider.gameObject;
+		BaseContainer container = hitObject.GetComponent<BaseContainer>();
+
+		if (container == null || container.content == null)
+		{
+			return null;
+		}
+
+		return container.content;
 	}
 
     private void MouseZeroDownAction()
     {
-        GameObject MainCamera = head.gameObject;
+		Interactive? content = GetBaseContainer();
 
-        Ray ray = MainCamera
-            .GetComponent<Camera>()
-            .ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-
-        if (!Physics.Raycast(ray, out hit))
+		if (content != null)
         {
-            return;
-        }
-
-        GameObject hitObject = hit.collider.gameObject;
-        BaseContainer container = hitObject.GetComponent<BaseContainer>();
-
-        if (container == null || container.content == null)
-        {
-            return;
-        }
-
-        container.content.MouseZeroDown();
+			content.MouseZeroDown();
+		}
     }
 
     void OnDrawGizmosSelected() // подсветка, для визуальной настройки jumpDistance
