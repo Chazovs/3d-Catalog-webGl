@@ -4,12 +4,17 @@ using UnityEngine.UI;
 
 public class Item : Interactive
 {
-    public int categoryId;
+    public int? categoryId;
     public string? description;
     public string? imagePath;
     public int itemId;
     public string name;
     public float? price;
+
+    public void KeyRActio()
+    {
+        Main.client.DeleteItemFromBasket(itemId);
+    }
 
     public void MouseOneDown()
     {

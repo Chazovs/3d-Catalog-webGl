@@ -10,7 +10,7 @@ public class Main : MonoBehaviour
     public static Client client;
     public static string confirmOrderUrl = "/personal/order/make/";
 
-    public void SetServerName(string serverName)
+    public static void SetServerName(string serverName)
     {
         serverName = serverName;
     }
@@ -36,6 +36,7 @@ public class Main : MonoBehaviour
         /*Client client = GameObject.Find("Client").GetComponent<Client>();*/
         client = GameObject.Find("Client").GetComponent<Client>();
         client.UploadCatalog();
+        client.GetBasket();
     }
 
     // Update is called once per frame

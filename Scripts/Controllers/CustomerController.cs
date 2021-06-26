@@ -93,11 +93,25 @@ public class CustomerController : MonoBehaviour
 		{
 			MouseOneDownAction();
 		}
-
-		if (Input.GetKeyDown(KeyCode.KeypadEnter))
+		
+		if (Input.GetKeyDown(KeyCode.R))
 		{
-			Debug.Log(Main.serverName + Main.confirmOrderUrl);
+			KeyRAction();
+		}
+
+		if (Input.GetKeyDown(KeyCode.L))
+		{
 			Application.OpenURL(Main.serverName + Main.confirmOrderUrl);
+		}
+	}
+
+    private void KeyRAction()
+    {
+		Interactive? content = GetBaseContainer();
+
+		if (content != null)
+		{
+			content.KeyRActio();
 		}
 	}
 
