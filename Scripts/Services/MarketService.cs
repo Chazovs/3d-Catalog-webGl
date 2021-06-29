@@ -74,6 +74,10 @@ public class MarketService
     private void CreateCategoryObject(Category category)
     {
         GameObject categoryObject = _objectService.InstantiateCategory(category, offsets);
+
+        _client.GetImageSprite(category.picture, categoryObject);
+
+        categoryObject.transform.Find("TextCanva").transform.Find("CategoryText").GetComponent<Text>().text = category.name;
         categoryObject.GetComponent<BaseContainer>().content = category;
     }
 
@@ -95,7 +99,7 @@ public class MarketService
 
         floorObject.transform.position += new Vector3(
             (_categoriesCount * Constants.categoryOffset)/2 - (Constants.catalogOffset/4),
-            -(Constants.scale/2),
+            0,
             (_maxItemInCategoryCount * Constants.itemOffset)/2 - (Constants.itemOffset * 1.5f)
             );
     }

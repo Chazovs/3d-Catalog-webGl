@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour
 {
+    private string _testPrefix = "";// "http://unimarket.local";
+
     public new void UploadCatalog()
     {
         StartCoroutine(StartUploadCatalog());
@@ -38,7 +40,7 @@ public class Client : MonoBehaviour
         form.AddField("sessid", Main.bxSessId);
         form.AddField("SITE_ID", Main.siteId);
 
-        UnityWebRequest www = UnityWebRequest.Post("/bitrix/services/main/ajax.php?action=chazov:unimarket.api.catalogcontroller.getcatalog", form);
+        UnityWebRequest www = UnityWebRequest.Post(_testPrefix + "/bitrix/services/main/ajax.php?action=chazov:unimarket.api.catalogcontroller.getcatalog", form);
 
         yield return www.SendWebRequest();
 
@@ -71,7 +73,7 @@ public class Client : MonoBehaviour
         form.AddField("SITE_ID", Main.siteId);
 
         UnityWebRequest www = UnityWebRequest.Post(
-               "/bitrix/services/main/ajax.php?action=chazov:unimarket.api.basketcontroller." + action,
+               _testPrefix + "/bitrix/services/main/ajax.php?action=chazov:unimarket.api.basketcontroller." + action,
                form
                );
 
@@ -99,7 +101,7 @@ public class Client : MonoBehaviour
         form.AddField("SITE_ID", Main.siteId);
 
         UnityWebRequest www = UnityWebRequest.Post(
-               "/bitrix/services/main/ajax.php?action=chazov:unimarket.api.basketcontroller.getBasket",
+               _testPrefix + "/bitrix/services/main/ajax.php?action=chazov:unimarket.api.basketcontroller.getBasket",
                form
                );
 
@@ -143,7 +145,7 @@ public class Client : MonoBehaviour
 
     private IEnumerator LoadPhoto(string imagePath, GameObject itemObject)
     {
-        string url = imagePath; //TODO delete test adress
+        string url = _testPrefix + imagePath; //TODO delete test adress
         Texture2D texture;
         texture = new Texture2D(4, 4, TextureFormat.DXT1, false);
         WWW www = new WWW(url);
