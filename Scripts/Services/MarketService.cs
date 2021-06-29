@@ -20,6 +20,11 @@ public class MarketService
     {
         foreach(var keyPair in catalogs)
         {
+            if(keyPair.Value.categories == null)
+            {
+                continue;
+            }
+
             CreateCatalogObject(keyPair.Value);
             CreateMarketCatalog(keyPair);
             offsets.catalogOffset += Constants.catalogOffset;
