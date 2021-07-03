@@ -7,4 +7,5 @@ public class Constants
    public const float scale = 1; //масштаб пространства
    public const string item = "item";
    public const string category = "category";
+   public const float ceilLevel = 4f;
 }

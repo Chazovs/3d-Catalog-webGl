@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 
@@ -103,6 +104,42 @@ public class CustomerController : MonoBehaviour
 		{
 			Application.OpenURL(Main.serverName + Main.confirmOrderUrl);
 		}
+
+		if (Input.GetKeyDown(KeyCode.Z))
+		{
+			KeyZAction();
+		}
+
+		if (Input.GetKeyDown(KeyCode.Q))
+		{
+			KeyQAction();
+		}
+	}
+
+    private void KeyQAction()
+    {
+		Client client = GameObject.Find("Client").GetComponent<Client>();
+		client.GetBasket();
+    }
+
+    private void KeyZAction()
+    {
+		Transform transform = GameObject.Find("LeftCanva").transform;
+
+		transform.Find("Title").GetComponent<Text>().text = "";
+		transform.Find("PriceTitle").GetComponent<Text>().text = "";
+		transform.Find("Summ").GetComponent<Text>().text = "";
+		transform.Find("Description").GetComponent<Text>().text =
+			"<b>W</b> - вперед \n"+
+			"<b>S</b> - назад \n"+
+			"<b>A</b> - влево \n"+
+			"<b>D</b> - вправо \n"+
+			"<b>Q</b> - Показать корзину \n"+
+			"<b>Space</b> - прыжок \n"+
+			"<b>Левая клавиша мыши</b> - добавить в корзину \n" +
+			"<b>Правая клавиша мыши</b> - информация о товаре \n" +
+			"<b>R</b> - убрать из корзины \n" +
+			"<b>L</b> - оформить заказ";
 	}
 
     private void KeyRAction()

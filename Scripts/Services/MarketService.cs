@@ -11,6 +11,7 @@ public class MarketService
     private int _maxItemInCategoryCount = 0;
     private int _categoriesCount = 0;
 
+
     public MarketService() {
         _objectService = GameObject.Find("ObjectService").GetComponent<ObjectService>();
         _client = GameObject.Find("Client").GetComponent<Client>();
@@ -84,23 +85,65 @@ public class MarketService
     private void CreateCatalogObject(Catalog catalog)
     {
        GameObject catalogObject = _objectService.InstantiateCatalog(catalog, offsets);
-       catalogObject.GetComponent<TextMesh>().text = catalog.name;
+        catalogObject.transform.rotation = Quaternion.Euler(0, 270, 0);
+        catalogObject.transform.Find("Canvas").transform.Find("Text").GetComponent<Text>().text = catalog.name;
     }
 
     private void CreateFloorObject()
     {
         GameObject floorObject = _objectService.CreateFloor();
+        GameObject ceilingObject = _objectService.CreateCeiling();
+        GameObject frontWallObject = _objectService.CreateWall();
+        GameObject rearWallObject = _objectService.CreateWall();
+        GameObject leftWallObject = _objectService.CreateWall();
+        GameObject rightWallObject = _objectService.CreateWall();
 
-        floorObject.transform.localScale += new Vector3(
+        Vector3 ceilFloorScale = new Vector3(
             _categoriesCount * Constants.categoryOffset,
             0,
             _maxItemInCategoryCount * Constants.itemOffset + (Constants.itemOffset * 3)
             );
-
-        floorObject.transform.position += new Vector3(
-            (_categoriesCount * Constants.categoryOffset)/2 - (Constants.catalogOffset/4),
+        Vector3 ceilFloorPosition = new Vector3(
+            (_categoriesCount * Constants.categoryOffset) / 2 - (Constants.catalogOffset / 4),
             0,
-            (_maxItemInCategoryCount * Constants.itemOffset)/2 - (Constants.itemOffset * 1.5f)
+            (_maxItemInCategoryCount * Constants.itemOffset) / 2 - (Constants.itemOffset * 1.5f)
             );
+
+        floorObject.transform.localScale += ceilFloorScale;
+        ceilingObject.transform.localScale += ceilFloorScale;
+        floorObject.transform.position += ceilFloorPosition;
+        ceilingObject.transform.position += ceilFloorPosition + new Vector3(0, Constants.ceilLevel, 0);
+
+        frontWallObject.transform.localScale = new Vector3(floorObject.transform.localScale.x, 0, Constants.ceilLevel);
+        frontWallObject.transform.position = new Vector3(
+            floorObject.transform.position.x,
+            ceilFloorPosition.y + (Constants.ceilLevel/2),
+             floorObject.transform.position.z + floorObject.transform.localScale.z/2
+            );
+        frontWallObject.transform.rotation = Quaternion.Euler(90, 0, 0);
+
+        rearWallObject.transform.localScale = frontWallObject.transform.localScale;
+        rearWallObject.transform.rotation = frontWallObject.transform.rotation;
+        rearWallObject.transform.position = new Vector3(
+            frontWallObject.transform.position.x,
+            frontWallObject.transform.position.y,
+            frontWallObject.transform.position.z - floorObject.transform.localScale.z
+            );
+
+        leftWallObject.transform.localScale = new Vector3(Constants.ceilLevel, ceilFloorScale.y, floorObject.transform.localScale.z);
+        leftWallObject.transform.rotation = Quaternion.Euler(0, 0, 90);
+        leftWallObject.transform.position = new Vector3(
+            floorObject.transform.position.x + floorObject.transform.localScale.x / 2,
+            ceilFloorPosition.y + (Constants.ceilLevel / 2),
+            floorObject.transform.position.z
+            );
+
+        rightWallObject.transform.localScale = leftWallObject.transform.localScale;
+        rightWallObject.transform.rotation = leftWallObject.transform.rotation;
+        rightWallObject.transform.position = new Vector3(
+            floorObject.transform.position.x - floorObject.transform.localScale.x / 2,
+           leftWallObject.transform.position.y,
+            leftWallObject.transform.position.z
+            ); ;
     }
 }

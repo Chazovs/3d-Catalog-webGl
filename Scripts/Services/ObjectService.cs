@@ -9,6 +9,8 @@ public class ObjectService : MonoBehaviour
     public GameObject FloorPrefab;
     public GameObject Customer;
     public GameObject MainCamera;
+    public GameObject CeilingPrefab;
+    public GameObject WallPrefab;
 
     internal GameObject InstantiateItem(Item item, Offsets offsets)
     {
@@ -32,6 +34,16 @@ public class ObjectService : MonoBehaviour
     internal GameObject CreateFloor()
     {
         return Instantiate(FloorPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+    }
+
+    internal GameObject CreateWall()
+    {
+        return Instantiate(WallPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+    }
+
+    internal GameObject CreateCeiling()
+    {
+        return Instantiate(CeilingPrefab, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     internal GameObject InstantiateCustomer(int maxCategories)

@@ -21,6 +21,6 @@ public class Offsets
     {
         float catalogX = (categoryCount / 2) * Constants.categoryOffset; // + (categoryOffset + catalogOffset)
 
-        return new Vector3(catalogX, Constants.catalogOffset, 0);
+        return new Vector3(-Constants.itemOffset*0.6f, 0, -Constants.itemOffset*2.5f);
     }
 }
