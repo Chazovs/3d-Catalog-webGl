@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour
 {
-    private string _testPrefix = "http://unimarket.local";
+    private string _testPrefix = "";
 
     public new void UploadCatalog()
     {
@@ -40,7 +40,11 @@ public class Client : MonoBehaviour
         form.AddField("sessid", Main.bxSessId);
         form.AddField("SITE_ID", Main.siteId);
 
-        UnityWebRequest www = UnityWebRequest.Post(_testPrefix + "/bitrix/services/main/ajax.php?action=chazov:unimarket.api.catalogcontroller.getcatalog", form);
+        UnityWebRequest www 
+            = UnityWebRequest.Post(
+                _testPrefix + "/bitrix/services/main/ajax.php?action=chazov:unimarket.api.catalogcontroller.getcatalog",
+                form
+                );
 
         yield return www.SendWebRequest();
 
@@ -59,7 +63,6 @@ public class Client : MonoBehaviour
 
             if (catalogResponseWrapper.data.success == true)
             {
-                Debug.Log("success");
                 marketService.CreateMarket(catalogResponseWrapper.data.catalogs);
             }
         }
@@ -156,4 +159,12 @@ public class Client : MonoBehaviour
 
         itemObject.transform.Find("Canvas").transform.Find("RawImage").GetComponent<RawImage>().texture = texture;
     }
+
+    private void LoadModel(string modelPath, GameObject itemObject)
+    {
+     UnityEngine.Object model = Resources.Load("https://bitrix.g4v.ru/test.3ds");
+
+     Instantiate(model, new Vector3(0, 0, 0), Quaternion.identity);
+    }
+
 }

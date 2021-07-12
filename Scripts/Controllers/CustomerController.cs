@@ -102,7 +102,7 @@ public class CustomerController : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.L))
 		{
-			Application.OpenURL(Main.serverName + Main.confirmOrderUrl);
+			Application.OpenURL("https://" + Main.serverName + Main.confirmOrderUrl);
 		}
 
 		if (Input.GetKeyDown(KeyCode.Z))
