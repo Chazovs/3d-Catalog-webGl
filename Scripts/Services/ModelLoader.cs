@@ -17,16 +17,12 @@ public class ModelLoader : MonoBehaviour
         {
             name = "Model"
         };
+
+        DownloadFile("https://bitrix.g4v.ru/test2.glb");
     }
     public void DownloadFile(string url)
     {
         string path = GetFilePath(url);
-        if (File.Exists(path))
-        {
-            Debug.Log("Found file locally, loading...");
-            LoadModel(path);
-            return;
-        }
 
         StartCoroutine(GetFileRequest(url, (UnityWebRequest req) =>
         {
@@ -37,6 +33,7 @@ public class ModelLoader : MonoBehaviour
             }
             else
             {
+                Debug.Log("start load");
                 // Save the model into a new wrapper
                 LoadModel(path);
             }
@@ -55,7 +52,8 @@ public class ModelLoader : MonoBehaviour
     {
         ResetWrapper();
         GameObject model = Importer.LoadFromFile(path);
-        model.transform.SetParent(wrapper.transform);
+        model.AddComponent<MeshCollider>();
+        /*model.transform.SetParent(wrapper.transform);*/
     }
 
     IEnumerator GetFileRequest(string url, Action<UnityWebRequest> callback)
