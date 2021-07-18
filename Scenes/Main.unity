@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.6
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 6047e2af145d49c4c81236dd7299a005, type: 2}
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 6679b0afacd33334e92365997703c780, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -960,7 +960,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.26
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -1212,6 +1212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemPrefab: {fileID: 7646470414569287250, guid: 9eb44691255ce054a8e9440ecd7f8e3c, type: 3}
+  ItemWhithModelPrefab: {fileID: 2808822724651523161, guid: 2464c1cb42ad8c643a73eb61658f2682, type: 3}
   CategoryPrefab: {fileID: 4191098543458597095, guid: 803bbb5713d26484aaaf01bca02d04c9, type: 3}
   CatalogPrefab: {fileID: 887304471204525193, guid: 4dcc15901517ec84a973119d8ea0106e, type: 3}
   FloorPrefab: {fileID: 8706921889281987906, guid: 84b2cf38eef86d64f9ea965f5c555191, type: 3}

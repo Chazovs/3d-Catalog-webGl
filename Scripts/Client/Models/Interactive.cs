@@ -3,4 +3,5 @@
     public void MouseZeroDown();
     public void MouseOneDown();
     public void KeyRActio();
+    public void KeyXAction();
 }

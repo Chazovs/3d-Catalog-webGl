@@ -13,12 +13,13 @@ public class ModelLoader : MonoBehaviour
     private void Start()
     {
         filePath = $"{Application.persistentDataPath}/Files/";
+
         wrapper = new GameObject
         {
             name = "Model"
         };
 
-        DownloadFile("https://bitrix.g4v.ru/test2.glb");
+        DownloadFile(ModelStore.getModel());
     }
     public void DownloadFile(string url)
     {
@@ -52,7 +53,11 @@ public class ModelLoader : MonoBehaviour
     {
         ResetWrapper();
         GameObject model = Importer.LoadFromFile(path);
+
         model.AddComponent<MeshCollider>();
+        model.AddComponent<Renderer>();
+        Material material = Resources.Load<Material>("Materials/default");
+        model.GetComponent<Renderer>().material = material;
         /*model.transform.SetParent(wrapper.transform);*/
     }
 

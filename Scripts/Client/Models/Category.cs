@@ -15,6 +15,11 @@ public class Category : Interactive
         throw new System.NotImplementedException();
     }
 
+    public void KeyXAction()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void MouseOneDown()
     {
         throw new System.NotImplementedException();

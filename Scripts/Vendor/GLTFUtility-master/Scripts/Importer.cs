@@ -135,9 +135,9 @@ namespace Siccity.GLTFUtility {
 
 		private static GameObject ImportGLTF(string filepath, ImportSettings importSettings, out AnimationClip[] animations) {
 			string json = File.ReadAllText(filepath);
-
 			// Parse json
 			GLTFObject gltfObject = JsonConvert.DeserializeObject<GLTFObject>(json);
+
 			return gltfObject.LoadInternal(filepath, null, 0, importSettings, out animations);
 		}
 
@@ -184,15 +184,14 @@ namespace Siccity.GLTFUtility {
 #region Sync
 		private static GameObject LoadInternal(this GLTFObject gltfObject, string filepath, byte[] bytefile, long binChunkStart, ImportSettings importSettings, out AnimationClip[] animations) {
 			CheckExtensions(gltfObject);
-
+			
 			// directory root is sometimes used for loading buffers from containing file, or local images
 			string directoryRoot = filepath != null ? Directory.GetParent(filepath).ToString() + "/" : null;
-
 			importSettings.shaderOverrides.CacheDefaultShaders();
-
 			// Import tasks synchronously
 			GLTFBuffer.ImportTask bufferTask = new GLTFBuffer.ImportTask(gltfObject.buffers, filepath, bytefile, binChunkStart);
 			bufferTask.RunSynchronously();
+
 			GLTFBufferView.ImportTask bufferViewTask = new GLTFBufferView.ImportTask(gltfObject.bufferViews, bufferTask);
 			bufferViewTask.RunSynchronously();
 			GLTFAccessor.ImportTask accessorTask = new GLTFAccessor.ImportTask(gltfObject.accessors, bufferViewTask);
@@ -201,6 +200,7 @@ namespace Siccity.GLTFUtility {
 			imageTask.RunSynchronously();
 			GLTFTexture.ImportTask textureTask = new GLTFTexture.ImportTask(gltfObject.textures, imageTask);
 			textureTask.RunSynchronously();
+			Debug.Log(gltfObject.materials);
 			GLTFMaterial.ImportTask materialTask = new GLTFMaterial.ImportTask(gltfObject.materials, textureTask, importSettings);
 			materialTask.RunSynchronously();
 			GLTFMesh.ImportTask meshTask = new GLTFMesh.ImportTask(gltfObject.meshes, accessorTask, bufferViewTask, materialTask, importSettings);
@@ -212,11 +212,9 @@ namespace Siccity.GLTFUtility {
 			GLTFAnimation.ImportResult[] animationResult = gltfObject.animations.Import(accessorTask.Result, nodeTask.Result, importSettings);
 			if (animationResult != null) animations = animationResult.Select(x => x.clip).ToArray();
 			else animations = new AnimationClip[0];
-
 			foreach (var item in bufferTask.Result) {
 				item.Dispose();
 			}
-
 			return nodeTask.Result.GetRoot();
 		}
 #endregion

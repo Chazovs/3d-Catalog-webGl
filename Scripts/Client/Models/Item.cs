@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Item : Interactive
@@ -10,10 +11,23 @@ public class Item : Interactive
     public int itemId;
     public string name;
     public float? price;
+    public string? modelPath;
 
     public void KeyRActio()
     {
         Main.client.DeleteItemFromBasket(itemId);
+    }
+
+    public void KeyXAction()
+    {
+        if (null == modelPath) {
+            Debug.Log("Путь к модели пустой");
+            return;
+        }
+
+        ModelStore.reset();
+        ModelStore.setModel(modelPath);
+        SceneManager.LoadScene("Object");
     }
 
     public void MouseOneDown()

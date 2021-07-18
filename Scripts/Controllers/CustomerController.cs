@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 
@@ -90,6 +91,11 @@ public class CustomerController : MonoBehaviour
 			MouseZeroDownAction();
 		}
 
+		if (Input.GetKeyDown(KeyCode.X))
+		{
+			KeyXAction();
+		}
+
 		if (Input.GetKeyDown(KeyCode.Mouse1))
 		{
 			MouseOneDownAction();
@@ -113,6 +119,23 @@ public class CustomerController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
 			KeyQAction();
+		}
+	}
+
+    private void KeyXAction()
+    {
+		if (SceneManager.GetActiveScene().name == "Object")
+		{
+			SceneManager.LoadScene("Main");
+        }
+        else
+		{
+			Interactive? content = GetBaseContainer();
+
+			if (content != null)
+			{
+				content.KeyXAction();
+			}
 		}
 	}
 

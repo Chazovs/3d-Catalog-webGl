@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour
 {
-    private string _testPrefix = "";
+    private string _testPrefix = "http://unimarket.local";
 
     public new void UploadCatalog()
     {

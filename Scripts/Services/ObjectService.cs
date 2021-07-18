@@ -4,6 +4,7 @@ using UnityEngine;
 public class ObjectService : MonoBehaviour
 {
     public GameObject ItemPrefab;
+    public GameObject ItemWhithModelPrefab;
     public GameObject CategoryPrefab;
     public GameObject CatalogPrefab;
     public GameObject FloorPrefab;
@@ -14,7 +15,12 @@ public class ObjectService : MonoBehaviour
 
     internal GameObject InstantiateItem(Item item, Offsets offsets)
     {
-        return Instantiate (ItemPrefab, offsets.CalculateItemOffset(), Quaternion.identity);
+        if (null == item.modelPath)
+        {
+            return Instantiate(ItemPrefab, offsets.CalculateItemOffset(), Quaternion.identity);
+        }
+        
+        return Instantiate (ItemWhithModelPrefab, offsets.CalculateItemOffset(), Quaternion.identity);
     }
 
     internal GameObject InstantiateCategory(Category category, Offsets offsets)

@@ -284,9 +284,10 @@ namespace Siccity.GLTFUtility {
 				this.materials = materials;
 				this.textureTask = textureTask;
 				this.importSettings = importSettings;
-
+				
 				task = new Task(() => {
 					if (materials == null) return;
+					return;//TODO это я написал это ретурн Он отрубает текстуры почему-то на WebGL
 					Result = new ImportResult[materials.Count];
 				});
 			}
