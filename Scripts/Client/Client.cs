@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour
 {
-    private string _testPrefix = "http://unimarket.local";
+    private string _testPrefix = "";
 
     public new void UploadCatalog()
     {
@@ -159,12 +159,4 @@ public class Client : MonoBehaviour
 
         itemObject.transform.Find("Canvas").transform.Find("RawImage").GetComponent<RawImage>().texture = texture;
     }
-
-    private void LoadModel(string modelPath, GameObject itemObject)
-    {
-     UnityEngine.Object model = Resources.Load("https://bitrix.g4v.ru/test.3ds");
-
-     Instantiate(model, new Vector3(0, 0, 0), Quaternion.identity);
-    }
-
 }

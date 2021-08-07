@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public static class ModelStore
 {
@@ -12,7 +9,7 @@ public static class ModelStore
 
     public static string getModel()
     {
-        return "http://unimarket.local" + modelPath;
+        return modelPath;
     }
 
     public static void reset()

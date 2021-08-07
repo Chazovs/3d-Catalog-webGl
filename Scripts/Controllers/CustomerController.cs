@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -108,7 +106,7 @@ public class CustomerController : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.L))
 		{
-			Application.OpenURL("https://" + Main.serverName + Main.confirmOrderUrl);
+			Application.OpenURL(Main.confirmOrderUrl);
 		}
 
 		if (Input.GetKeyDown(KeyCode.Z))
@@ -153,6 +151,7 @@ public class CustomerController : MonoBehaviour
 		transform.Find("PriceTitle").GetComponent<Text>().text = "";
 		transform.Find("Summ").GetComponent<Text>().text = "";
 		transform.Find("Description").GetComponent<Text>().text =
+			"<b>X</b> - открыть 3D модель\n"+
 			"<b>W</b> - вперед \n"+
 			"<b>S</b> - назад \n"+
 			"<b>A</b> - влево \n"+

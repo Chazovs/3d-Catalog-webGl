@@ -1,3 +1,4 @@
+using System.Net;
 using UnityEngine;
 
 public class Main : MonoBehaviour
@@ -8,7 +9,7 @@ public class Main : MonoBehaviour
     public static Client client;
     public static string confirmOrderUrl = "/personal/order/make/";
 
-    public static void SetServerName(string serverName)
+    public void SetServerName(string serverName)
     {
         serverName = serverName;
     }
@@ -31,6 +32,7 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(Dns.GetHostName()); //TODO убрать потом
         /*Client client = GameObject.Find("Client").GetComponent<Client>();*/
         client = GameObject.Find("Client").GetComponent<Client>();
         client.UploadCatalog();
